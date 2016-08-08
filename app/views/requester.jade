@@ -1,0 +1,19 @@
+script.
+	window.onload = function() {
+		console.log('here');
+		document.getElementById('butt').onclick = function() {
+			var ajax = new XMLHttpRequest();
+			ajax.open("POST", "/api/user", true);
+			ajax.data = {}
+			ajax.onreadystatechange = function() {console.log(ajax.response)}
+			ajax.send("fname=Bryce");
+		}
+	}
+	
+
+
+button#butt Post
+
+form(action='/api/user' method='post')
+	input(type='hidden' value='kolton' name='lname')
+	input(type='submit')
