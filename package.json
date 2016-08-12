@@ -20,7 +20,10 @@
     "sequelize": "~3.23.6",
     "serve-favicon": "~2.3.0",
     "morgan": "~1.7.0",
-    "express-mysql-session": "~1.1.1"
+    "express-mysql-session": "~1.1.1",
+    "request": "~2.74.0",
+    "paypal-rest-sdk": "~1.6.9",
+    "passport-facebook": "~2.1.1"
   },
   "devDependencies": {},
   "scripts": {

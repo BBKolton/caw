@@ -36,18 +36,6 @@ app.use(session(config.session));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
-
-
-app.use(function(req, res, next) {
-	console.log(req.body)
-	next();
-})
-
-
-
-
 //removes evil trailing slashes off of requests for pages. This fixes
 //issues with error pages not loading if we're deep in folder
 //hierarchies, and simplifies the types of pages we have to look for.

@@ -1,16 +1,17 @@
 script.
 	window.onload = function() {
-		console.log('here');
+		console.log('am I crazy here???');
 		document.getElementById('butt').onclick = function() {
 			var ajax = new XMLHttpRequest();
-			ajax.open("POST", "/api/user", true);
+			ajax.open("POST", "/api/series", true);
+			ajax.setRequestHeader("Content-type", "application/json; charset=utf-8");
 			ajax.data = {}
 			ajax.onreadystatechange = function() {console.log(ajax.response)}
-			ajax.send("fname=Bryce");
+			ajax.send(JSON.stringify({name: 'bryce', description: 'a description lol'}));
 		}
 	}
 	
-
+h1 ASDFG LMAOOOO
 
 button#butt Post
 
