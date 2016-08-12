@@ -7,8 +7,6 @@ module.exports = function(sequelize, DataTypes) {
 		street: DataTypes.STRING,
 		city: DataTypes.STRING,
 		zip: DataTypes.INTEGER
-	}, {
-		paranoid: true
 	})
 
 	return Location;

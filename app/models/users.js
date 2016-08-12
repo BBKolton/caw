@@ -7,8 +7,6 @@ module.exports = function(sequelize, DataTypes) {
 		phone: DataTypes.STRING,
 		password: DataTypes.STRING,
 		level: DataTypes.REAL
-	}, {
-		paranoid: true
 	});
 
 	return User;

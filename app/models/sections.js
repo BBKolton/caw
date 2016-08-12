@@ -13,8 +13,7 @@ module.exports = function(sequelize, DataTypes) {
 			Section.belongsTo(models.Location),
 			Section.belongsToMany(models.User, {through: 'Registrations'}),
 			Section.belongsToMany(models.User, {through: 'SectionsInstructors'})
-		}},
-		paranoid: true
+		}}
 	});
 
 	return Section;

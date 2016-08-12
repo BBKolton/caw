@@ -1,6 +1,10 @@
 extends skeleton
 
+append js
+	script(src='/js/viewer.js')
+
 block content
+	input(type='hidden' id='id' value='#{row.id}')
 	.container
 
 		- for (val in row)
@@ -12,4 +16,5 @@ block content
 					- else
 						input.form-control(id='#{val}' name='#{val}' value='#{row[val]}')
 
-		
+		button(type='button' id='update').btn.btn-info Update
+		button(type='button' id='delete').btn.btn-danger.pull-xs-right Delete

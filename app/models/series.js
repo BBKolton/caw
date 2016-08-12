@@ -6,8 +6,7 @@ module.exports = function(sequelize, DataTypes) {
 	}, {
 		classMethods: { associate: function(models) {
 			Series.belongsTo(models.Category)
-		}},
-		paranoid: true
+		}}
 	})
 
 	return Series;
