@@ -7,14 +7,15 @@ block content
 	input(type='hidden' id='id' value='#{row.id}')
 	.container
 
-		- for (val in row)
-			- if (val != 'createdAt' && val != 'deletedAt' && val != 'updatedAt')
-				.form-group
-					label(for='#{val}')= val[0].toUpperCase() + val.slice(1)
-					- if (val == 'description')
-						textarea.form-control(id='#{val}' name='#{val}' value='#{row[val]}')
-					- else
-						input.form-control(id='#{val}' name='#{val}' value='#{row[val]}')
+		form(id='form' name='form')
+			- for (val in row)
+				- if (val != 'createdAt' && val != 'deletedAt' && val != 'updatedAt')
+					.form-group
+						label(for='#{val}')= val[0].toUpperCase() + val.slice(1)
+						- if (val == 'description')
+							textarea.form-control(id='#{val}' name='#{val}') #{row[val]}
+						- else
+							input.form-control(id='#{val}' name='#{val}' value='#{row[val]}')
 
 		button(type='button' id='update').btn.btn-info Update
 		button(type='button' id='delete').btn.btn-danger.pull-xs-right Delete

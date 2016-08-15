@@ -39,14 +39,24 @@ function constructRestApi(router, model) {
 	//for get requests with a specific ID
 	router.get('/api/'+ url +'/:id', function(req, res) {
 		getId(req, function(row) {
-			res.json(row);
+			if (!row) 
+				res.status(404)
+			else
+				res.json(row);
 		});
 	});
 
 	router.get('/view/'+ url +'/:id', function(req, res) {
 		getId(req, function(row) {
-			console.log(row.dataValues)
-			res.render('rowviewer', {row: row.dataValues});
+			console.log(row)
+			if (!row) {
+				res.render('error', {
+					t: 'Not Found', 
+					d: 'The requested id could not be located'
+				})
+			} else {
+				res.render('rowviewer', {row: row.dataValues});
+			}
 		})
 	});
 
@@ -59,12 +69,22 @@ function constructRestApi(router, model) {
 
 	//for get requests of a whole model
 	router.get('/api/'+ url, function(req, res) {
-		getModel(req, function(mod) {res.json(mod)});
+		getModel(req, function(mod) {
+			if (!mod) {
+				res.send(404);
+			} else {
+				res.json(mod)
+			}
+		});
 	});
 
 	router.get('/view/'+ url, function(req, res) {
 		getModel(req, function(mod) {
-			res.render('modelviewer', {model: mod})
+			if (mod.length == 0) {
+				res.redirect
+			} else {
+				res.render('modelviewer', {model: mod})
+			}
 		});
 	});
 
@@ -102,6 +122,8 @@ function constructRestApi(router, model) {
 	//for delete requests to a specific id
 	router.delete('/api/'+ url +'/:id', function(req, res) {
 		db[model].findById(req.params.id).then(function(mod) {
+			console.log(mod)
+			console.log(mod == true)
 			if (mod) {
 				mod.destroy();
 				res.status(200).end();
@@ -110,6 +132,8 @@ function constructRestApi(router, model) {
 			}
 		});
 	});
+
+
 }
 
 //find and return all attributes of a given model
@@ -122,3 +146,17 @@ function popInstanceFields(model, req) {
 	console.log(vals);
 	return vals;
 }
+
+router.all('/api/:err', function(req, res) {
+	res.render('error', {
+		t: 'Unknown API',
+		d: 'Could not find an API with the name ' + req.params.err
+	})
+})
+
+	router.all('/view/:err', function(req, res) {
+	res.render('error', {
+		t: 'Unknown View',
+		d: 'Could not find a view with the name ' + req.params.err
+	})
+})
