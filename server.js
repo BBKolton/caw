@@ -52,7 +52,8 @@ app.use(function removeTrailingSlashes(req, res, next) {
 //grabs all the controllers in the folder, and adds them to the controllers
 //list. synchronous function.
 console.log('Loading Controllers...')
-var controllers = glob.sync(config.root + 'app/controllers/*.js');
+console.log(config.root + 'app/controllers/*.js')
+var controllers = glob.sync(config.root + '/app/controllers/*.js');
 controllers.forEach(function assignController(controller) {
 	require(controller)(app);
 	console.log('Sucessfully Loaded '.green + path.basename(controller));

@@ -11,8 +11,8 @@ module.exports = function(sequelize, DataTypes) {
 		classMethods: { associate: function(models) {
 			Section.belongsTo(models.Series),
 			Section.belongsTo(models.Location),
-			Section.belongsToMany(models.User, {through: 'Registrations'}),
-			Section.belongsToMany(models.User, {through: 'SectionsInstructors'})
+			Section.belongsToMany(models.User, {through: 'Registration'}),
+			Section.belongsToMany(models.User, {through: 'SectionsInstructor'})
 		}}
 	});
 

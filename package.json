@@ -1,8 +1,12 @@
 {
   "name": "caw",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "ClassesAndWorkshops.com website redesign",
-  "main": "app.js",
+  "author": "Bryce Kolton",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "body-parser": "~1.15.2",
     "colors": "~1.1.2",
@@ -29,6 +33,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Bryce Kolton",
   "license": "BSD-2-Clause"
 }
