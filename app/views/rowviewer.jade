@@ -4,8 +4,10 @@ append js
 	script(src='/js/viewer.js')
 
 block content
-	input(type='hidden' id='id' value='#{row.id}')
+	input(type='hidden' id='hidden-id' value='#{row.id}')
 	.container
+		h1= name[0].toUpperCase() + name.slice(1)
+		p: a(href='/view/#{name}') Return to #{name}s
 
 		form(id='form' name='form')
 			- for (val in row)
@@ -16,6 +18,11 @@ block content
 							textarea.form-control(id='#{val}' name='#{val}') #{row[val]}
 						- else
 							input.form-control(id='#{val}' name='#{val}' value='#{row[val]}')
+
+		#incomplete.alert-warning.alert.hidden(role='alert')
+			p Please fill out all fields
+		#unknown.alert.alert-danger.hidden(role='alert')
+			p Could not find the specified row; It is likely already gone
 
 		button(type='button' id='update').btn.btn-info Update
 		button(type='button' id='delete').btn.btn-danger.pull-xs-right Delete

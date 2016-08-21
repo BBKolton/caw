@@ -1,5 +1,10 @@
 extends skeleton
 
+-if (!t)
+	-t = 'Unspecified Error'
+-if (!d)
+	-d = 'An unknown error ocurred. If the problem persists, please notify an adminsitrator'
+
 block content
 	.container
 		h1= t

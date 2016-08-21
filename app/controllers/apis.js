@@ -5,26 +5,25 @@ module.exports = function(app) {
 	app.use('/', router)
 };
 
+router.all('/view*', function(req, res, next) {
+	if (!req.user) {
+		return res.redirect('/login')
+	} else if (req.user.level < 3) {
+		return res.render('error', {
+			t: 'insufficient privileges',
+			d: 'You are not authorized to view this page'
+		})
+	} else {
+		next();
+	}
+})
+
 //For each model, construct its REST API
 for (prop in db) {
 	if (prop.toLowerCase() != "sequelize") {
 		constructRestApi(router, prop);
-		constructWebView(router, prop); //>>>???????
 	}
 }
-
-
-function constructWebView(router, model) {
-	var url = model.toLowerCase();
-
-
-}
-
-
-
-
-
-
 
 
 router.get('/api/requester', function(req, res) {
@@ -40,7 +39,7 @@ function constructRestApi(router, model) {
 	router.get('/api/'+ url +'/:id', function(req, res) {
 		getId(req, function(row) {
 			if (!row) 
-				res.status(404)
+				res.status(404).end()
 			else
 				res.json(row);
 		});
@@ -48,14 +47,13 @@ function constructRestApi(router, model) {
 
 	router.get('/view/'+ url +'/:id', function(req, res) {
 		getId(req, function(row) {
-			console.log(row)
 			if (!row) {
 				res.render('error', {
 					t: 'Not Found', 
 					d: 'The requested id could not be located'
 				})
 			} else {
-				res.render('rowviewer', {row: row.dataValues});
+				res.render('rowviewer', {row: row.dataValues, name: url});
 			}
 		})
 	});
@@ -71,7 +69,7 @@ function constructRestApi(router, model) {
 	router.get('/api/'+ url, function(req, res) {
 		getModel(req, function(mod) {
 			if (!mod) {
-				res.send(404);
+				res.send(404).end();
 			} else {
 				res.json(mod)
 			}
@@ -81,9 +79,11 @@ function constructRestApi(router, model) {
 	router.get('/view/'+ url, function(req, res) {
 		getModel(req, function(mod) {
 			if (mod.length == 0) {
-				res.redirect
+				res.render('modelviewer', {model: null, name: url, fields: db[model].attributes})
 			} else {
-				res.render('modelviewer', {model: mod})
+				if (!mod.dataValues) mod.dataValues = mod;
+				console.log(db[model].attributes)
+				res.render('modelviewer', {model: mod, name: url, fields: db[model].attributes})
 			}
 		});
 	});
@@ -91,7 +91,6 @@ function constructRestApi(router, model) {
 	function getModel(req, callback) {
 		db[model].findAll()
 		.then(function(mod) {
-			console.log(mod)
 			callback(mod);
 		});
 	}
@@ -112,9 +111,9 @@ function constructRestApi(router, model) {
 		.then(function(mod) {
 			mod.update(popInstanceFields(model, req))
 			.then(function() {
-				res.status(200);
+				res.status(200).end();
 			}).catch(function(e) {
-				res.status(304).end(e);
+				res.status(304).end();
 			});
 		});
 	});
@@ -122,11 +121,11 @@ function constructRestApi(router, model) {
 	//for delete requests to a specific id
 	router.delete('/api/'+ url +'/:id', function(req, res) {
 		db[model].findById(req.params.id).then(function(mod) {
-			console.log(mod)
-			console.log(mod == true)
 			if (mod) {
-				mod.destroy();
-				res.status(200).end();
+				mod.destroy().then(function() {
+					
+					res.status(200).end();
+				});
 			} else {
 				res.status(404).end();
 			}
@@ -140,10 +139,9 @@ function constructRestApi(router, model) {
 function popInstanceFields(model, req) {
 	var vals = {};
 	for (attr in db[model].attributes) {
-		console.log(attr)
 		vals[attr] = req.body[attr];
 	}
-	console.log(vals);
+	console.log(vals)
 	return vals;
 }
 

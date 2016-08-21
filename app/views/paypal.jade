@@ -1,0 +1,95 @@
+extends skeleton
+
+append js
+	script(src='/js/paypal.js')
+
+block content
+	.container
+		.row
+			.col-md-4
+				h1 Charge Credit Card
+				p <b>Note:</b> currently running in sandbox mode. A request will be made to PayPal, but no money will transact. Testing with a live credit card will NOT cause charges, and no data is saved through the transaction
+
+				//- #warning.alert.alert-warning.hidden(role='alert')
+				//- 	h3 There is an error in your form data
+				//- 	p#warningMessage
+
+				#info.alert.alert-info.hidden(role='alert')
+					p <img src='/img/ring.svg' /> Processing Transaction... 
+
+				if errors
+					#error.alert.alert-danger(role='alert')
+						h3 Paypal Error
+						for e in errors
+							- var title =  e.field.slice(e.field.indexOf('[0].') + 4)
+							- var title = title.replace(/\./g, ' ').replace(/_/g, ' ')
+							div.alert
+								h4= title
+								p= e.issue
+						
+
+			form(method='post')#form
+				.col-md-4
+					h2 Card Info
+					.form-group
+						label(for='type') Type
+						select(type='text' name='type')#type.form-control
+							option(value='visa') Visa
+							option(value='mastercard') Mastercard
+							option(value='discover') Discover
+							option(value='amex') American Express
+
+					.form-group
+						label(for='number') Credit Card Number
+						input(type='text' name='number' maxlength='16' minlength='16' required='required')#number.form-control
+						p.help-block no dashes, spaces, or other punctuation
+
+					.form-group
+						label(for='expire_month') Expiration Month
+						input(type='text' name='expire_month' maxlength='2' minlength='2' required='required')#expire_month.form-control
+						p.help-block in two digit form, e.g. "03"
+
+					.form-group
+						label(for='expire_year') Expiration Year
+						input(type='text' name='expire_year' maxlength='4' minlength='4' required='required')#expire_year.form-control
+						p.help-block in full year, e.g. "2019"
+
+					.form-group
+						label(for='cvv2') CVC Code
+						input(type='text' name='cvv2' minlength='3' maxlength='4' required='required')#cvv2.form-control
+						p.help-block three or four digit code on back of card
+
+				.col-md-4
+					h2 Billing Info
+					.form-group
+						label(for='first_name') First Name
+						input(type='text' name='first_name' required='required')#first_name.form-control
+
+					.form-group
+						label(for='last_name') Last Name
+						input(type='text' name='last_name' required='required')#last_name.form-control
+
+					.form-group
+						label(for='line1') Billing Address
+						input(type='text' name='line1' required='required')#line1.form-control
+
+					.form-group
+						label(for='line2') Billing Address, Line 2
+						input(type='text' name='line2')#line2.form-control
+						p.help-block if applicable
+
+					.form-group
+						label(for='city') City
+						input(type='text' name='city' required='required')#city.form-control
+
+					.form-group
+						label(for='state') State
+						input(type='text' name='state' required='required')#state.form-control
+
+					.form-group
+						label(for='zip') Zip Code
+						input(type='text' name='zip' required='required')#zip.form-control
+
+					.form-group
+						button(type='submit')#button.btn.btn-success Submit Payment
+

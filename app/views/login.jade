@@ -1,0 +1,51 @@
+extends skeleton
+
+append css
+
+block content
+	.container
+
+
+		.col-xs-6
+			h1 Login
+			form(method='POST' action='/login')
+				.form-group
+					label(for='loginEmail') Email
+					input.form-control(type='text' name='email' required='required')#loginEmail
+				.form-group
+					label(for='loginPass') Password
+					input.form-control(type='password' name='password'  required='required')#loginPass
+				.form-group
+					button.btn.btn-info.disabled(type='submit')#loginSubmit Log In
+	
+			if error 
+				.alert.alert-warning
+					h2= error.title
+					p= error.mess
+		
+		.col-xs-6
+			h1 Register
+			form(method='POST' action='/register')#registerForm
+				.form-group
+					label(for='registerEmail') Email
+					input.form-control(type='text' name='email' required='required')#registerEmail
+				.form-group
+					label(for='registerPassword') Password
+					input.form-control(type='password' name='password' required='required' minlength='10')#registerPassword
+					p.help-block Must be at least 10 characters long
+				.form-group
+					label(for='registerFname') First Name
+					input.form-control(type='text' name='fname' required='required')#registerFname
+				.form-group
+					label(for='registerLname') Last Name
+					input.form-control(type='text' name='lname' required='required')#registerLname
+				.form-group
+					label(for='registerPhone') Phone Number
+					input.form-control(type='text' name='phone' minlength='10' required='required')#registerPhone
+					p.help-block Include area code. No spaces, dashes or parentheses necessary
+				.form-group
+					button.btn.btn-success.disabled(type='submit')#registerSubmit Register
+
+
+append js
+	script(src='/js/login.js')

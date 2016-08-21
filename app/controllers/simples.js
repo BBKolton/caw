@@ -7,9 +7,10 @@ module.exports = function(app) {
 
 router.get('/', function(req, res) {
 	db.Series.findAll().then(function(series) {
-		console.log(series)
+		console.log(req.user)
 		res.render('index', {
-			series: series
+			series: series, 
+			user: req.user
 		});
 	})
 });

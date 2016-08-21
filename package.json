@@ -5,7 +5,7 @@
   "author": "Bryce Kolton",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "body-parser": "~1.15.2",
@@ -27,11 +27,23 @@
     "express-mysql-session": "~1.1.1",
     "request": "~2.74.0",
     "paypal-rest-sdk": "~1.6.9",
-    "passport-facebook": "~2.1.1"
+    "passport-facebook": "~2.1.1",
+    "passport-local": "~1.0.0",
+    "passport-local-register": "~1.0.4",
+    "lockit-delete-account": "~1.0.5",
+    "lockit-login": "~1.1.6",
+    "lockit": "~1.3.1",
+    "lockit-forgot-password": "~1.3.2",
+    "lockit-signup": "~1.2.2",
+    "q": "~1.4.1",
+    "lockit-sql-adapter": "~0.5.3",
+    "cookie-session": "~2.0.0-alpha.1",
+    "connect-flash": "~0.1.1",
+    "simple-oauth2": "~0.8.0",
+    "oauth2orize": "~1.5.0",
+    "connect-ensure-login": "~0.1.1",
+    "oauth2-server": "~2.4.1"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "license": "BSD-2-Clause"
 }
